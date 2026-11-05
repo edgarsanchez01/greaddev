@@ -1,0 +1,88 @@
+---
+import { education } from '../../data/education.ts';
+import type { Education } from '../../types/content.ts';
+import { formatPeriod } from '../../lib/presentation.ts';
+import SectionHeading from '../ui/SectionHeading.astro';
+const entries: readonly Education[] = education;
+---
+
+<section id="formacion" class="professional-section education" aria-labelledby="education-title">
+  <div class="page-container">
+    <div class="section-intro">
+      <SectionHeading
+        id="education-title"
+        index="05"
+        firstLine="Formación"
+        secondLine="académica"
+      />
+      <p>Formación universitaria en desarrollo y gestión de software.</p>
+    </div>
+    {entries.map((entry) => (
+      <div class="education-entry">
+        <div class="institution">
+          <h3>{entry.institution}</h3>
+          {entry.period && <p class="education-period">{formatPeriod(entry.period)}</p>}
+        </div>
+        <ul class="qualifications">
+          {entry.qualifications.map((qualification) => (
+            <li data-qualification={qualification.id}>
+              <h4>{qualification.title}</h4>
+              {qualification.period && <p>{formatPeriod(qualification.period)}</p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .education-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--space-12);
+    border-block-start: var(--border-width) solid var(--line-2);
+    padding-block-start: var(--space-6);
+  }
+  h3 {
+    font: 600 var(--text-base)/1.5 var(--font-body);
+  }
+  .education-period {
+    margin-block-start: var(--space-3);
+    color: var(--signal);
+    font: var(--text-sm)/1.5 var(--font-mono);
+  }
+  .qualifications {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .qualifications li {
+    border-inline-start: var(--border-width) solid var(--signal-dim);
+    padding-inline-start: var(--space-6);
+  }
+  h4 {
+    font: 600 var(--text-lg)/1.5 var(--font-body);
+  }
+  .qualifications p {
+    margin-block-start: var(--space-2);
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  @media (max-width: 47.999rem) {
+    .education-entry {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+    .qualifications {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+    .qualifications li {
+      padding-inline-start: var(--space-4);
+    }
+  }
+</style>

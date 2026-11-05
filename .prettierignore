@@ -1,0 +1,17 @@
+node_modules/
+.astro/
+dist/
+coverage/
+playwright-report/
+test-results/
+pnpm-lock.yaml
+PRD.md
+Design-System.md
+Architecture.md
+AGENTS.md
+Edgar Sanchez Flores.pdf
+pet/
+# Preserve the approved Phase 1 files byte-for-byte; ESLint and TS still check them.
+src/data/
+src/types/
+src/editorial/

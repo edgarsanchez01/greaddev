@@ -1,0 +1,5 @@
+# Require explicit review instead of silently adding future release-age exceptions.
+minimumReleaseAgeStrict: true
+minimumReleaseAgeExclude:
+  # Exact stable patch inspected for Astro 7 / Tailwind 4 compatibility.
+  - vite@8.3.6

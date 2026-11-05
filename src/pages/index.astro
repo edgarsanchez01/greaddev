@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteIdentity } from '../data/site.ts';
+import Header from '../components/layout/Header.astro';
+import Hero from '../components/sections/Hero.astro';
+import PrimaryStack from '../components/sections/PrimaryStack.astro';
+import SelectedWork from '../components/sections/SelectedWork.astro';
+import Experience from '../components/sections/Experience.astro';
+import Stack from '../components/sections/Stack.astro';
+import About from '../components/sections/About.astro';
+import Education from '../components/sections/Education.astro';
+import Certifications from '../components/sections/Certifications.astro';
+import Contact from '../components/sections/Contact.astro';
+import Footer from '../components/layout/Footer.astro';
+---
+
+<BaseLayout title={siteIdentity.title} description={siteIdentity.description}>
+  <Header />
+  <main id="contenido" tabindex="-1">
+    <Hero />
+    <PrimaryStack />
+    <SelectedWork />
+    <Experience />
+    <Stack />
+    <About />
+    <Education />
+    <Certifications />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,96 @@
+---
+import { getSkillGroups } from '../../lib/professional.ts';
+import SectionHeading from '../ui/SectionHeading.astro';
+import TechTag from '../ui/TechTag.astro';
+const groups = getSkillGroups();
+---
+
+<section id="stack" class="professional-section stack" aria-labelledby="stack-title">
+  <div class="page-container">
+    <div class="section-intro">
+      <SectionHeading id="stack-title" index="03" firstLine="Stack" secondLine="tecnológico" />
+    </div>
+    <div class="stack-categories">
+      {groups.map((group) => (
+        <section
+          id={`stack-${group.id}`}
+          class="stack-category"
+          aria-labelledby={`category-${group.id}`}
+        >
+          <h3 id={`category-${group.id}`}>{group.label}</h3>
+          <ul>
+            {group.entries.map(({ id, skill, primary }) => (
+              <li class:list={{ 'primary-skill': primary }} data-skill={id}>
+                <div class="skill-name">
+                  <TechTag id={id} />
+                </div>
+                {skill.context && (
+                  <p class="skill-context">
+                    {id === 'murex' ? 'Origen de archivos CSV.' : skill.context}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack {
+    background: var(--bg-1);
+  }
+  .stack-categories {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-8);
+  }
+  .stack-category {
+    border-block-start: var(--border-width) solid var(--line-2);
+    padding-block-start: var(--space-4);
+    scroll-margin-block-start: var(--space-24);
+  }
+  h3 {
+    font: 600 var(--text-base)/1.4 var(--font-body);
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .primary-skill :global(.tech-tag) {
+    padding: var(--space-1) var(--space-3);
+    border-color: var(--signal);
+    background: var(--surface-1);
+    color: var(--signal-strong);
+    font-size: var(--text-base);
+    font-weight: 600;
+  }
+  li:not(.primary-skill) :global(.tech-tag) {
+    padding: 0;
+    border: 0;
+    color: var(--text-2);
+    font: var(--text-sm)/1.5 var(--font-body);
+  }
+  .skill-context {
+    margin-block-start: var(--space-1);
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  @media (max-width: 47.999rem) {
+    .stack-categories {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+  }
+</style>

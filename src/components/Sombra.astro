@@ -1,0 +1,135 @@
+<figure class="sombra" data-sombra>
+  <div class="sombra-visual" aria-hidden="true">
+    <img
+      class="sombra-fallback"
+      src="/pet/sombra/idle-00.png"
+      alt=""
+      width="192"
+      height="208"
+      loading="eager"
+      decoding="async"
+    />
+    <span class="sombra-atlas" aria-hidden="true"></span>
+  </div>
+  <figcaption>
+    <span class="sombra-name">
+      Sombra<span aria-hidden="true">.exe</span>
+    </span>
+    <span class="sombra-caption">
+      Mi compañero
+      <br />
+      de código
+    </span>
+  </figcaption>
+</figure>
+
+<script>
+  import { initSombra } from '../scripts/sombra.ts';
+  document.querySelectorAll<HTMLElement>('[data-sombra]').forEach(initSombra);
+</script>
+
+<style>
+  .sombra {
+    position: relative;
+    inline-size: min(100%, 24rem);
+    aspect-ratio: 192 / 208;
+    margin: 0;
+  }
+  .sombra-visual {
+    position: relative;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: hidden;
+    /* Transparent headroom must not intercept the Hero links underneath it. */
+    pointer-events: none;
+  }
+  .sombra-fallback {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    image-rendering: pixelated;
+  }
+  .sombra-atlas {
+    position: absolute;
+    inset: 0;
+    background-size: 800% 1100%;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .sombra[data-animating] .sombra-atlas {
+    opacity: 1;
+  }
+  .sombra[data-animating] .sombra-fallback {
+    opacity: 0;
+  }
+  figcaption {
+    position: absolute;
+    inset-block-start: var(--space-4);
+    /* Restore the approved Phase 4.1/5 anchor, not an animation-dependent offset. */
+    inset-inline-start: 28%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-inline-size: 70%;
+  }
+  .sombra-name {
+    padding: 0 var(--space-3);
+    background: var(--signal);
+    color: var(--bg-0);
+    font: 1.5rem/1.1 var(--font-pixel);
+  }
+  .sombra-caption {
+    padding: var(--space-2) var(--space-3);
+    border: var(--border-width) solid var(--signal);
+    background: var(--bg-0);
+    color: var(--text-1);
+    font: var(--text-sm)/1.35 var(--font-mono);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sombra[data-animating] .sombra-atlas {
+      opacity: 0;
+    }
+    .sombra[data-animating] .sombra-fallback {
+      opacity: 1;
+    }
+  }
+  @media (max-width: 47.999rem) {
+    .sombra {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 12rem;
+      align-items: center;
+      inline-size: 100%;
+      aspect-ratio: auto;
+    }
+    .sombra-visual {
+      grid-column: 2;
+      grid-row: 1;
+      inline-size: 12rem;
+      block-size: 13rem;
+      /* Reclaim transparent headroom only; the full canonical sprite stays visible. */
+      margin-block-start: calc(-1 * var(--space-12));
+    }
+    figcaption {
+      position: relative;
+      inset-block-start: auto;
+      inset-inline-start: auto;
+      grid-column: 1;
+      grid-row: 1;
+      justify-self: end;
+      align-items: stretch;
+      inline-size: max-content;
+      max-inline-size: 100%;
+    }
+    .sombra-name {
+      font-size: 1.25rem;
+      padding-inline: var(--space-1);
+      white-space: nowrap;
+    }
+    .sombra-caption {
+      font-size: var(--text-sm);
+      padding: var(--space-1) var(--space-2);
+    }
+  }
+</style>

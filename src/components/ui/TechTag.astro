@@ -1,0 +1,28 @@
+---
+import { skills } from '../../data/skills.ts';
+import type { TechnologyId } from '../../types/content.ts';
+interface Props {
+  id: TechnologyId;
+}
+const { id } = Astro.props;
+---
+
+<span class="tech-tag">{skills[id].name}</span>
+
+<style>
+  .tech-tag {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    border: var(--border-width) solid var(--line-2);
+    border-radius: var(--radius-micro);
+    color: var(--text-1);
+    font: var(--text-xs)/1.35 var(--font-mono);
+  }
+  @media (max-width: 63.999rem) {
+    .tech-tag {
+      padding-block: calc(var(--space-1) / 2);
+      font-size: var(--text-sm);
+      line-height: 1.4;
+    }
+  }
+</style>

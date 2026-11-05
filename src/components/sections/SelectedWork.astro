@@ -1,0 +1,76 @@
+---
+import { projects } from '../../data/projects.ts';
+import type { ProjectId } from '../../types/content.ts';
+import ProjectCard from '../ui/ProjectCard.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+const featuredIds = (Object.keys(projects) as ProjectId[]).filter((id) => projects[id].featured);
+---
+
+<section id="proyectos" class="selected-work" aria-labelledby="work-title">
+  <div class="page-container">
+    <div class="work-intro">
+      <SectionHeading id="work-title" index="01" firstLine="Proyectos" secondLine="destacados" />
+      <p>
+        Trabajo real en comercio electrónico, sistemas empresariales, integración de servicios y
+        desarrollo backend.
+      </p>
+      <span class="work-count">{String(featuredIds.length).padStart(2, '0')} proyectos</span>
+    </div>
+    <div class="project-grid">
+      {featuredIds.map((id, index) => (
+        <ProjectCard id={id} index={index + 1} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .selected-work {
+    border-block-end: var(--border-width) solid var(--line-2);
+    padding-block: var(--space-8) var(--space-16);
+  }
+  .work-intro {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-8);
+    margin-block-end: var(--space-6);
+  }
+  .work-intro > p {
+    border-inline-start: var(--border-width) solid var(--signal-dim);
+    padding-inline-start: var(--space-8);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .work-count {
+    align-self: center;
+    color: var(--text-2);
+    font: var(--text-xs) var(--font-mono);
+    white-space: nowrap;
+  }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+  @media (max-width: 47.999rem) {
+    .selected-work {
+      padding-block: var(--space-6) var(--space-12);
+    }
+    .work-intro {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-3);
+      margin-block-end: var(--space-4);
+    }
+    .work-intro > p {
+      border: 0;
+      padding: 0;
+    }
+    .work-count {
+      display: none;
+    }
+    .project-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,188 @@
+---
+import { getExperienceEntries } from '../../lib/professional.ts';
+import { formatPeriod } from '../../lib/presentation.ts';
+import SectionHeading from '../ui/SectionHeading.astro';
+import TechTag from '../ui/TechTag.astro';
+import Icon from '../ui/Icon.astro';
+const entries = getExperienceEntries().map((entry) => ({
+  ...entry,
+  visibleContributions: entry.contributions.slice(0, 4),
+  extraContributions: entry.contributions.slice(4),
+}));
+---
+
+<section
+  id="experiencia"
+  class="professional-section experience"
+  aria-labelledby="experience-title"
+>
+  <div class="page-container">
+    <div class="section-intro">
+      <SectionHeading
+        id="experience-title"
+        index="02"
+        firstLine="Experiencia"
+        secondLine="profesional"
+      />
+      <p>
+        De APIs para dispositivos móviles a comercio electrónico y sistemas de riesgos financieros.
+      </p>
+    </div>
+    <ol class="experience-list" aria-label="Trayectoria profesional, de más reciente a más antigua">
+      {entries.map(
+        ({ id, experience, projectId, project, visibleContributions, extraContributions }) => (
+          <li class="experience-row" data-experience={id}>
+            <div class="experience-identity">
+              <p class="experience-period">{formatPeriod(experience.period)}</p>
+              <h3>{experience.organization}</h3>
+              <p class="experience-role">{experience.role}</p>
+              <a
+                class="related-project"
+                href={`#title-${projectId}`}
+                aria-label={`Ver proyecto: ${project.title}`}
+              >
+                Proyecto relacionado <Icon name="arrow-up-right" size={16} />
+              </a>
+            </div>
+            <div class="experience-detail">
+              <ul class="experience-contributions">
+                {visibleContributions.map((entry) => (
+                  <li data-contribution={entry.id}>{entry.text}</li>
+                ))}
+              </ul>
+              {extraContributions.length > 0 && (
+                <details class="experience-more">
+                  <summary>
+                    <span class="when-closed">
+                      Ver más contribuciones ({extraContributions.length})
+                    </span>
+                    <span class="when-open">Ocultar contribuciones adicionales</span>
+                  </summary>
+                  <ul class="experience-contributions">
+                    {extraContributions.map((entry) => (
+                      <li data-contribution={entry.id}>{entry.text}</li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+              <ul
+                class="experience-technologies"
+                aria-label={`Tecnologías de ${experience.organization}`}
+              >
+                {project.technologyIds.map((technologyId) => (
+                  <li>
+                    <TechTag id={technologyId} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ),
+      )}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .experience-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .experience-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--space-12);
+    padding-block: var(--space-6);
+    border-block-start: var(--border-width) solid var(--line-2);
+  }
+  .experience-period {
+    color: var(--signal);
+    font: var(--text-sm)/1.5 var(--font-mono);
+  }
+  h3 {
+    margin-block-start: var(--space-3);
+    font: 600 var(--text-lg)/1.3 var(--font-body);
+  }
+  .experience-role {
+    margin-block-start: var(--space-2);
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  .related-project {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target-size);
+    margin-block-start: var(--space-3);
+    font-size: var(--text-sm);
+  }
+  .experience-contributions {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding-inline-start: var(--space-4);
+    max-inline-size: var(--reading-max);
+  }
+  .experience-contributions li {
+    padding-inline-start: var(--space-2);
+  }
+  .experience-contributions li::marker {
+    color: var(--signal);
+  }
+  .experience-more {
+    margin-block-start: var(--space-3);
+    border-block-start: var(--border-width) solid var(--line-1);
+  }
+  .experience-more > summary {
+    display: list-item;
+    min-block-size: var(--target-size);
+    padding-block: var(--space-3);
+    color: var(--signal);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    list-style: disclosure-closed inside;
+    cursor: pointer;
+  }
+  .experience-more[open] > summary {
+    list-style-type: disclosure-open;
+  }
+  .experience-more > summary:hover {
+    color: var(--signal-strong);
+    text-decoration: underline;
+  }
+  .when-open,
+  .experience-more[open] .when-closed {
+    display: none;
+  }
+  .experience-more[open] .when-open {
+    display: inline;
+  }
+  .experience-more .experience-contributions {
+    margin-block-start: var(--space-2);
+  }
+  .experience-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+  }
+  @media (max-width: 47.999rem) {
+    .experience-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-4);
+      padding-block: var(--space-6);
+    }
+    .related-project {
+      margin-block-start: var(--space-2);
+    }
+    .experience-contributions {
+      font-size: var(--text-sm);
+    }
+    .experience-technologies {
+      margin-block-start: var(--space-4);
+    }
+  }
+</style>

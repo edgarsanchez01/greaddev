@@ -1,0 +1,244 @@
+---
+import { profile } from '../../data/profile.ts';
+import Icon from '../ui/Icon.astro';
+const navigation = [
+  { index: '01', label: 'Inicio', href: '#inicio' },
+  { index: '02', label: 'Proyectos', href: '#proyectos' },
+  { index: '03', label: 'Experiencia', href: '#experiencia' },
+  { index: '04', label: 'Stack', href: '#stack' },
+  { index: '05', label: 'Sobre mí', href: '#sobre-mi' },
+  { index: '06', label: 'Contacto', href: '#contacto' },
+];
+---
+
+<header class="site-header">
+  <div class="page-container header-inner">
+    <a class="brand" href="#inicio" aria-label={`${profile.brand}, inicio`}>
+      {profile.brand}
+      <span aria-hidden="true">_</span>
+    </a>
+    <nav class="desktop-navigation" aria-label="Navegación principal">
+      <ul class="navigation">
+        {navigation.map((item) => (
+          <li>
+            <a href={item.href}>
+              <span class="nav-index" aria-hidden="true">
+                [{item.index}]
+              </span>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="header-links">
+      <a class="icon-link" href={profile.githubUrl} aria-label="GitHub de Edgar Sánchez Flores">
+        <Icon name="github" size={23} />
+      </a>
+      <a class="icon-link" href={profile.linkedinUrl} aria-label="LinkedIn de Edgar Sánchez Flores">
+        <Icon name="linkedin" size={23} />
+      </a>
+      {profile.cvUrl && (
+        <a class="cv-link" href={profile.cvUrl} download>
+          CV <Icon name="arrow-down" size={18} />
+        </a>
+      )}
+    </div>
+    <details class="mobile-navigation" data-mobile-navigation>
+      <summary aria-controls="mobile-navigation-links">
+        <span class="menu-label-closed">Menú</span>
+        <span class="menu-label-open">Cerrar</span>
+      </summary>
+      <nav id="mobile-navigation-links" aria-label="Navegación principal">
+        <ul class="navigation">
+          {navigation.map((item) => (
+            <li>
+              <a href={item.href}>
+                <span class="nav-index" aria-hidden="true">
+                  [{item.index}]
+                </span>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="mobile-socials">
+          <a class="icon-link" href={profile.githubUrl} aria-label="GitHub de Edgar Sánchez Flores">
+            <Icon name="github" size={23} />
+          </a>
+          <a
+            class="icon-link"
+            href={profile.linkedinUrl}
+            aria-label="LinkedIn de Edgar Sánchez Flores"
+          >
+            <Icon name="linkedin" size={23} />
+          </a>
+        </div>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  import { initMobileNavigation } from '../../scripts/mobile-navigation.ts';
+  document
+    .querySelectorAll<HTMLDetailsElement>('[data-mobile-navigation]')
+    .forEach(initMobileNavigation);
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 20;
+    background: var(--bg-0);
+    border-block-end: var(--border-width) solid var(--line-2);
+  }
+  .mobile-navigation {
+    display: none;
+  }
+  .header-inner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-6);
+    min-block-size: 4.25rem;
+  }
+  .brand {
+    justify-self: start;
+    color: var(--text-1);
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .brand span {
+    color: var(--signal);
+  }
+  .navigation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0 var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .navigation a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target-size);
+    color: var(--text-1);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .navigation a:hover {
+    color: var(--signal);
+    text-decoration: underline;
+  }
+  .nav-index {
+    color: var(--signal);
+    font: var(--text-sm) var(--font-mono);
+  }
+  .header-links {
+    display: flex;
+    justify-self: end;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .icon-link {
+    display: grid;
+    place-items: center;
+    inline-size: var(--target-size);
+    block-size: var(--target-size);
+    color: var(--text-1);
+    border: var(--border-width) solid var(--line-2);
+    border-radius: var(--radius-micro);
+  }
+  .icon-link:hover {
+    color: var(--signal);
+    border-color: var(--signal);
+  }
+  .cv-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target-size);
+    padding-inline: var(--space-3);
+    border: var(--border-width) solid var(--signal);
+    font: var(--text-sm) var(--font-mono);
+    text-decoration: none;
+  }
+  @media (max-width: 63.999rem) {
+    .site-header {
+      position: relative;
+    }
+    .header-inner {
+      position: relative;
+      display: block;
+      padding-block: 0;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      min-block-size: 4.25rem;
+      font-size: 1.25rem;
+    }
+    .desktop-navigation,
+    .header-links {
+      display: none;
+    }
+    .mobile-navigation {
+      display: block;
+    }
+    .mobile-navigation > summary {
+      position: absolute;
+      inset-block-start: var(--space-3);
+      inset-inline-end: 0;
+      min-block-size: var(--target-size);
+      padding: var(--space-2) var(--space-3);
+      border: var(--border-width) solid var(--line-2);
+      border-radius: var(--radius-micro);
+      color: var(--text-1);
+      font: var(--text-sm)/1.8 var(--font-mono);
+      list-style: disclosure-closed inside;
+      cursor: pointer;
+    }
+    .mobile-navigation[open] > summary {
+      list-style-type: disclosure-open;
+    }
+    .mobile-navigation > summary:hover {
+      color: var(--signal);
+      border-color: var(--signal);
+    }
+    .menu-label-open,
+    .mobile-navigation[open] .menu-label-closed {
+      display: none;
+    }
+    .mobile-navigation[open] .menu-label-open {
+      display: inline;
+    }
+    .mobile-navigation nav {
+      padding-block: var(--space-4) var(--space-6);
+      border-block-start: var(--border-width) solid var(--line-1);
+    }
+    .mobile-navigation .navigation {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-2) var(--space-4);
+    }
+    .mobile-navigation .navigation a {
+      display: flex;
+    }
+    .mobile-socials {
+      display: flex;
+      gap: var(--space-3);
+      margin-block-start: var(--space-4);
+    }
+  }
+</style>

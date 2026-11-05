@@ -1,0 +1,109 @@
+---
+import { certifications } from '../../data/certifications.ts';
+import type { Certification } from '../../types/content.ts';
+import { formatContentDate } from '../../lib/presentation.ts';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+const entries: readonly Certification[] = certifications;
+---
+
+<section
+  id="certificaciones"
+  class="professional-section certifications"
+  aria-labelledby="certifications-title"
+>
+  <div class="page-container">
+    <div class="section-intro">
+      <SectionHeading
+        id="certifications-title"
+        index="06"
+        firstLine="Cursos y"
+        secondLine="certificados"
+      />
+      <p>Formación complementaria en backend, desarrollo web y trabajo ágil.</p>
+    </div>
+    <ol class="certification-list" aria-label="Cursos y certificados">
+      {entries.map((entry, index) => (
+        <li data-certification={entry.id}>
+          <span class="certificate-index" aria-hidden="true">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <div class="certificate-detail">
+            <h3>{entry.title}</h3>
+            {entry.issuer && <p class="certificate-meta">{entry.issuer}</p>}
+            {entry.credentialId && <p class="certificate-meta">ID: {entry.credentialId}</p>}
+            {entry.credentialUrl && (
+              <a href={entry.credentialUrl}>
+                Ver credencial <Icon name="arrow-up-right" size={16} />
+              </a>
+            )}
+          </div>
+          {entry.issuedAt && (
+            <span class="certificate-year">{formatContentDate(entry.issuedAt)}</span>
+          )}
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .certifications {
+    background: var(--bg-1);
+  }
+  .certification-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-12);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .certification-list > li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-content: start;
+    gap: var(--space-3);
+    padding-block: var(--space-4);
+    border-block-start: var(--border-width) solid var(--line-2);
+  }
+  .certificate-index {
+    color: var(--signal);
+    font: var(--text-sm)/1.6 var(--font-mono);
+  }
+  h3 {
+    font: 400 var(--text-base)/1.5 var(--font-body);
+  }
+  .certificate-year {
+    color: var(--text-2);
+    font: var(--text-sm)/1.6 var(--font-mono);
+  }
+  .certificate-meta {
+    margin-block-start: var(--space-2);
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  .certificate-detail a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target-size);
+    font-size: var(--text-sm);
+  }
+  @media (max-width: 47.999rem) {
+    .certification-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .certificate-year {
+      font-family: var(--font-body);
+    }
+  }
+  @media (max-width: 24rem) {
+    .certification-list > li {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+    .certificate-year {
+      grid-column: 2;
+    }
+  }
+</style>

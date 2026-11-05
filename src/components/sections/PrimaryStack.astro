@@ -1,0 +1,80 @@
+---
+import { skills } from '../../data/skills.ts';
+import { primaryStackIds } from '../../lib/presentation.ts';
+import Icon from '../ui/Icon.astro';
+---
+
+<section class="primary-stack" aria-labelledby="primary-stack-title">
+  <div class="page-container stack-inner">
+    <h2 id="primary-stack-title">Stack principal</h2>
+    <ul>
+      {primaryStackIds.map((id) => (
+        <li>
+          <Icon name={id} size={27} />
+          <span>{skills[id].name}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .primary-stack {
+    border-block: var(--border-width) solid var(--line-2);
+    background: var(--bg-1);
+  }
+  .stack-inner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-8);
+    padding-block: var(--space-3);
+  }
+  h2 {
+    padding-inline-end: var(--space-8);
+    border-inline-end: var(--border-width) solid var(--signal-dim);
+    font: 600 var(--text-sm)/1.5 var(--font-mono);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    align-items: center;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-block-size: 2.5rem;
+    font-size: var(--text-sm);
+    white-space: nowrap;
+  }
+  @media (max-width: 63.999rem) {
+    .stack-inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2);
+    }
+    h2 {
+      border: 0;
+      padding: 0;
+    }
+    ul {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    li {
+      justify-content: flex-start;
+    }
+  }
+  @media (max-width: 39.999rem) {
+    ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-2) var(--space-4);
+    }
+  }
+</style>

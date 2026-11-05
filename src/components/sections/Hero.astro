@@ -1,0 +1,164 @@
+---
+import { profile } from '../../data/profile.ts';
+import Sombra from '../Sombra.astro';
+import Icon from '../ui/Icon.astro';
+const [role, focus] = profile.role.split(' / ');
+---
+
+<section id="inicio" class="hero" aria-label="Presentación de Edgar Sánchez Flores">
+  <div class="page-container hero-layout">
+    <div class="hero-copy">
+      <p class="hero-eyebrow text-signal">
+        <span class="pixel" aria-hidden="true"></span>PLAYER_01 / SOFTWARE_ENGINEER
+        <span class="eyebrow-rule" aria-hidden="true"></span>
+      </p>
+      <h1 class="hero-wordmark font-display" aria-label={profile.brand}>
+        {profile.brand.toUpperCase()}
+        <span aria-hidden="true">_</span>
+      </h1>
+      <p class="hero-name">{profile.name}</p>
+      <p class="hero-role">
+        <strong>{role}</strong>
+        <span>({focus})</span>
+      </p>
+      <p class="hero-summary">{profile.summary}</p>
+      <div class="hero-actions">
+        <a class="action action--primary" href="#proyectos">
+          <Icon name="code" size={22} />
+          Ver proyectos
+          <Icon name="arrow-down" size={19} />
+        </a>
+        <a
+          class="action action--secondary"
+          href={`mailto:${profile.email}`}
+          aria-label="Escribir a Edgar Sánchez Flores"
+        >
+          <Icon name="mail" size={21} />
+          Escríbeme
+        </a>
+      </div>
+    </div>
+    <div class="hero-companion">
+      <Sombra />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: var(--bg-0);
+  }
+  .hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-8);
+    padding-block: var(--space-6);
+  }
+  .hero-copy {
+    min-inline-size: 0;
+  }
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-block-end: var(--space-4);
+    font: var(--text-xs)/1.5 var(--font-mono);
+    white-space: nowrap;
+  }
+  .pixel {
+    inline-size: 0.625rem;
+    block-size: 0.625rem;
+    background: var(--signal);
+    flex: none;
+  }
+  .eyebrow-rule {
+    flex: 1;
+    min-inline-size: var(--space-4);
+    block-size: 1px;
+    background: var(--signal-dim);
+  }
+  .hero-wordmark {
+    margin: 0;
+    font-size: clamp(2.25rem, 7.45vw, 7rem);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+    white-space: nowrap;
+  }
+  .hero-wordmark span {
+    color: var(--signal);
+  }
+  .hero-name {
+    margin-block-start: var(--space-3);
+    font-size: clamp(1.375rem, 2.5vw, 2rem);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .hero-role {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    margin-block-start: var(--space-4);
+    font: var(--text-base)/1.45 var(--font-mono);
+  }
+  .hero-role strong {
+    padding: var(--space-1) var(--space-3);
+    background: var(--signal);
+    color: var(--bg-0);
+    font-weight: 600;
+  }
+  .hero-role > span {
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  .hero-summary {
+    margin-block-start: var(--space-4);
+    max-inline-size: 66ch;
+    font-size: var(--text-base);
+    line-height: 1.65;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-block-start: var(--space-6);
+  }
+  .hero-companion {
+    display: flex;
+    justify-content: center;
+    min-inline-size: 0;
+  }
+  @media (max-width: 47.999rem) {
+    .hero-layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      padding-block: var(--space-6) var(--space-4);
+    }
+    .hero-wordmark {
+      font-size: clamp(2.25rem, 11.6vw, 6.5rem);
+    }
+    .hero-companion {
+      margin-block-start: var(--space-3);
+    }
+    .hero-actions {
+      gap: var(--space-3);
+      margin-block-start: var(--space-4);
+    }
+    .hero-actions .action {
+      gap: var(--space-2);
+      padding-inline: var(--space-3);
+    }
+  }
+  @media (max-width: 24rem) {
+    .hero-eyebrow {
+      gap: var(--space-2);
+    }
+    .eyebrow-rule {
+      display: none;
+    }
+    .hero-actions {
+      gap: var(--space-3);
+    }
+  }
+</style>

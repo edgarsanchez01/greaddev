@@ -1,0 +1,99 @@
+---
+import { profile } from '../../data/profile.ts';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+const links = [
+  { label: profile.email, href: `mailto:${profile.email}`, icon: 'mail' },
+  { label: 'GitHub', href: profile.githubUrl, icon: 'github' },
+  { label: 'LinkedIn', href: profile.linkedinUrl, icon: 'linkedin' },
+] as const;
+---
+
+<section id="contacto" class="professional-section contact" aria-labelledby="contact-title">
+  <div class="page-container contact-layout">
+    <div class="contact-copy">
+      <SectionHeading
+        id="contact-title"
+        index="07"
+        firstLine="Hablemos"
+        secondLine="de software."
+      />
+      <p>¿Tienes un proyecto o una oportunidad profesional? Escríbeme para conversar.</p>
+      <a class="action action--primary" href={`mailto:${profile.email}`}>
+        <Icon name="mail" size={22} />
+        Escribir un correo
+        <Icon name="arrow-up-right" size={19} />
+      </a>
+    </div>
+    <ul class="contact-links" aria-label="Contacto y perfiles públicos">
+      {links.map((link) => (
+        <li>
+          <a href={link.href}>
+            <Icon name={link.icon} size={22} />
+            <span>{link.label}</span>
+            <Icon name="arrow-up-right" size={18} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--band-moss);
+  }
+  .contact-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: end;
+    gap: var(--space-16);
+  }
+  .contact-copy :global(h2) {
+    font-size: clamp(2.25rem, 5vw, 5rem);
+  }
+  .contact-copy > p {
+    margin-block-start: var(--space-6);
+    max-inline-size: 44ch;
+  }
+  .contact-copy > .action {
+    margin-block-start: var(--space-8);
+  }
+  .contact-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .contact-links li {
+    border-block-end: var(--border-width) solid var(--signal-dim);
+  }
+  .contact-links a {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-3);
+    min-block-size: var(--target-size);
+    padding-block: var(--space-4);
+    color: var(--text-1);
+    text-decoration: none;
+  }
+  .contact-links a:hover {
+    color: var(--signal);
+    text-decoration: underline;
+  }
+  .contact-links span {
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 47.999rem) {
+    .contact-layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+    .contact-copy > .action {
+      margin-block-start: var(--space-6);
+    }
+    .contact-links {
+      font-size: var(--text-sm);
+    }
+  }
+</style>

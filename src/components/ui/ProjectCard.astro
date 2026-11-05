@@ -1,0 +1,253 @@
+---
+import type { ProjectId } from '../../types/content.ts';
+import { formatPeriod, getProjectPresentation } from '../../lib/presentation.ts';
+import Icon from './Icon.astro';
+import TechTag from './TechTag.astro';
+interface Props {
+  id: ProjectId;
+  index: number;
+}
+const { id, index } = Astro.props;
+const { project, experience, contribution, icon } = getProjectPresentation(id);
+---
+
+<article class="project-card" aria-labelledby={`title-${id}`} data-project={id}>
+  <svg
+    class="project-frame"
+    viewBox="0 0 1000 500"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path
+      d="M12 1H988L999 12V488L988 499H12L1 488V12Z"
+      fill="none"
+      vector-effect="non-scaling-stroke"
+    />
+  </svg>
+  <div class="project-symbol" aria-hidden="true">
+    <Icon name={icon} size={33} />
+  </div>
+  <div class="project-body">
+    <div class="project-title-row">
+      <h3 id={`title-${id}`}>{project.title}</h3>
+      <span class="project-index" aria-hidden="true">
+        {String(index).padStart(2, '0')}
+      </span>
+    </div>
+    <p class="project-context">
+      <span>{experience.organization}</span>
+      <span>{formatPeriod(experience.period)}</span>
+    </p>
+    <p class="project-role">{experience.role}</p>
+    <p class="project-summary">{project.summary}</p>
+    <p class="project-contribution">
+      <span class="contribution-label">Contribución</span>
+      {contribution.text}
+    </p>
+    <ul class="project-technologies" aria-label={`Tecnologías de ${project.title}`}>
+      {project.technologyIds.map((technologyId) => (
+        <li>
+          <TechTag id={technologyId} />
+        </li>
+      ))}
+    </ul>
+    {(project.repositoryUrl || project.liveUrl || project.caseStudyPath) && (
+      <div class="project-links">
+        {project.repositoryUrl && (
+          <a href={project.repositoryUrl}>
+            Código <Icon name="arrow-up-right" size={16} />
+          </a>
+        )}
+        {project.liveUrl && (
+          <a href={project.liveUrl}>
+            Sitio <Icon name="arrow-up-right" size={16} />
+          </a>
+        )}
+        {project.caseStudyPath && (
+          <a href={project.caseStudyPath}>
+            Caso de estudio <Icon name="arrow-up-right" size={16} />
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+</article>
+
+<style>
+  .project-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-content: start;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    background: var(--bg-1);
+  }
+  .project-frame {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    pointer-events: none;
+    stroke: var(--signal-dim);
+    stroke-width: var(--border-width);
+  }
+  .project-card::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    inset-inline-end: 0;
+    inset-block-end: 0;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    background: var(--signal);
+    opacity: 0.65;
+    clip-path: polygon(
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 80%,
+      20% 80%,
+      20% 60%,
+      40% 60%,
+      40% 40%,
+      60% 40%,
+      60% 20%,
+      80% 20%,
+      80% 0
+    );
+  }
+  .project-symbol {
+    display: grid;
+    place-items: center;
+    inline-size: 3.75rem;
+    block-size: 3.75rem;
+    border: var(--border-width) solid var(--signal-dim);
+    border-radius: var(--radius-micro);
+    color: var(--signal);
+  }
+  .project-body {
+    min-inline-size: 0;
+  }
+  .project-title-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    justify-content: space-between;
+  }
+  h3 {
+    font: 600 clamp(1.125rem, 1.55vw, 1.375rem)/1.25 var(--font-body);
+    text-wrap: pretty;
+  }
+  .project-index {
+    flex: none;
+    color: var(--signal);
+    font: var(--text-xs)/1.8 var(--font-mono);
+  }
+  .project-context {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-3);
+    margin-block-start: var(--space-2);
+    color: var(--text-2);
+    font: var(--text-xs)/1.6 var(--font-mono);
+  }
+  .project-role {
+    margin-block-start: var(--space-1);
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  .project-summary {
+    margin-block-start: var(--space-3);
+    font-size: var(--text-base);
+    line-height: 1.55;
+  }
+  .project-contribution {
+    margin-block-start: var(--space-4);
+    color: var(--text-2);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .contribution-label {
+    display: block;
+    margin-block-end: var(--space-1);
+    color: var(--signal);
+    font: var(--text-xs)/1.5 var(--font-mono);
+    text-transform: uppercase;
+  }
+  .project-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    padding: 0 var(--space-4) 0 0;
+    list-style: none;
+  }
+  .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-block-start: var(--space-4);
+  }
+  .project-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target-size);
+  }
+  @media (max-width: 63.999rem) {
+    .project-card {
+      gap: 0 var(--space-3);
+      padding: var(--space-4);
+    }
+    .project-body {
+      display: contents;
+    }
+    .project-symbol {
+      grid-column: 1;
+      grid-row: 1;
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
+    }
+    .project-title-row {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
+    }
+    .project-body > p,
+    .project-technologies,
+    .project-links {
+      grid-column: 1 / -1;
+    }
+    .project-context {
+      font: var(--text-sm)/1.5 var(--font-body);
+    }
+    .project-context > span:first-child {
+      color: var(--text-1);
+      font-weight: 600;
+    }
+    .project-context > span:last-child {
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .project-role {
+      margin-block-start: 0;
+    }
+    .project-contribution {
+      margin-block-start: var(--space-3);
+      padding-block-start: var(--space-3);
+      border-block-start: var(--border-width) solid var(--line-1);
+      color: var(--text-1);
+      line-height: 1.55;
+    }
+    .contribution-label {
+      display: inline;
+      margin: 0 var(--space-2) 0 0;
+    }
+    .project-technologies {
+      gap: var(--space-1) var(--space-2);
+      margin-block-start: var(--space-3);
+    }
+  }
+</style>

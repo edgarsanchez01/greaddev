@@ -1,0 +1,61 @@
+# Dependencies
+node_modules/
+
+# Astro
+.astro/
+dist/
+
+# Testing
+coverage/
+playwright-report/
+test-results/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# TypeScript
+*.tsbuildinfo
+
+# Private CV
+/Edgar Sanchez Flores.pdf
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Temporary files
+.cache/
+.temp/
+tmp/
+
+# Editor
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Backups
+*.bak
+*.backup
+*.orig
+
+
+# Development review evidence
+/docs/review/
+
+# Sombra intermediate assets and QA
+/pet/Sombra/decoded/
+/pet/Sombra/frames/
+/pet/Sombra/final-frames/
+/pet/Sombra/qa/
+/pet/Sombra/references/
+
+# Sombra generation metadata
+/pet/Sombra/imagegen-jobs.json
+/pet/Sombra/pet_request.json

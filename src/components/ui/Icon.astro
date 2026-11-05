@@ -1,0 +1,135 @@
+---
+interface Props {
+  name:
+    | 'github'
+    | 'linkedin'
+    | 'code'
+    | 'arrow-down'
+    | 'arrow-up-right'
+    | 'mail'
+    | 'pause'
+    | 'play'
+    | 'java'
+    | 'spring-boot'
+    | 'angular'
+    | 'typescript'
+    | 'docker'
+    | 'kubernetes'
+    | 'bag'
+    | 'database'
+    | 'phone'
+    | 'store';
+  size?: number;
+}
+const { name, size = 24 } = Astro.props;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'github' && (
+    <path
+      fill="currentColor"
+      stroke="none"
+      d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.73 1.16 1.73 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.29-5.13-1.25-5.13-5.56 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.64 0c2.15-1.46 3.1-1.15 3.1-1.15.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.32-2.64 5.26-5.15 5.54.4.35.76 1.03.76 2.08v3.11c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z"
+    />
+  )}
+  {name === 'linkedin' && (
+    <>
+      <rect x="2" y="2" width="20" height="20" rx="2" />
+      <path stroke-width="2.5" d="M7 10v7M11.5 17v-7m0 3c0-4 5-4 5 0v4" />
+      <circle cx="7" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </>
+  )}
+  {name === 'code' && <path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18" />}
+  {name === 'arrow-down' && <path d="M12 3v18m-7-7 7 7 7-7" />}
+  {name === 'arrow-up-right' && <path d="M5 19 19 5M5 5h14v14" />}
+  {name === 'pause' && (
+    <>
+      <path d="M8 4v16M16 4v16" />
+    </>
+  )}
+  {name === 'play' && <path d="m7 3 14 9-14 9V3Z" />}
+  {name === 'mail' && (
+    <>
+      <rect x="2" y="4" width="20" height="16" rx="1" />
+      <path d="m2 5 10 8L22 5" />
+    </>
+  )}
+  {name === 'java' && (
+    <>
+      <path d="M4 10h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-5Zm13 1h2a3 3 0 0 1 0 6h-2M3 23h16M9 7c-3-3 4-3 1-6m4 6c-3-3 4-3 1-6" />
+    </>
+  )}
+  {name === 'spring-boot' && (
+    <>
+      <path d="M20 3C8 1 1 7 3 15c2 8 13 7 17 0 2-4 1-8 0-12Z" />
+      <path d="M3 21 17 7M6 17c5 1 9-1 12-5" />
+    </>
+  )}
+  {name === 'angular' && (
+    <>
+      <path d="m12 2 10 4-2 13-8 3-8-3L2 6 12 2Z" />
+      <path d="m7 17 5-12 5 12M9 13h6" />
+    </>
+  )}
+  {name === 'typescript' && (
+    <>
+      <rect x="2" y="2" width="20" height="20" rx="1" />
+      <path d="M5 10h6m-3 0v9m11-8c-5-3-8 2-3 4s2 6-3 3" />
+    </>
+  )}
+  {name === 'docker' && (
+    <>
+      <path d="M2 12h16c3 0 3-2 4-3 1 4-1 6-4 6-2 6-13 8-16-3Z" />
+      <path d="M4 8h4v4H4zm4 0h4v4H8zm4 0h4v4h-4zM8 4h4v4H8zm4 0h4v4h-4z" />
+    </>
+  )}
+  {name === 'kubernetes' && (
+    <>
+      <path d="m12 1 9 5 2 10-7 7H8l-7-7L3 6l9-5Z" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="1.5" />
+      <path d="M12 3v7m0 4v7M4 7l6 4m4 2 6 4M4 17l6-4m4-2 6-4" />
+    </>
+  )}
+  {name === 'bag' && (
+    <>
+      <path d="M4 7h16l1 15H3L4 7Z" />
+      <path d="M8 8V6a4 4 0 0 1 8 0v2M8 13h8" />
+    </>
+  )}
+  {name === 'database' && (
+    <>
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5v14c0 4 18 4 18 0V5M3 12c0 4 18 4 18 0" />
+    </>
+  )}
+  {name === 'phone' && (
+    <>
+      <rect x="5" y="1" width="14" height="22" rx="2" />
+      <path d="M10 4h4M10 20h4" />
+    </>
+  )}
+  {name === 'store' && (
+    <>
+      <path d="M3 10v12h18V10M1 10l3-8h16l3 8M1 10c0 4 5 4 5 0 0 4 6 4 6 0 0 4 6 4 6 0 0 4 5 4 5 0M9 22v-8h6v8" />
+    </>
+  )}
+</svg>
+
+<style>
+  svg {
+    display: block;
+    flex: none;
+  }
+</style>

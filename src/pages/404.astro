@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { profile } from '../data/profile.ts';
+---
+
+<BaseLayout
+  title={`Página no encontrada — ${profile.brand}`}
+  description="Esta página no existe. Vuelve al inicio del portfolio de Edgar Sánchez Flores."
+  noindex
+>
+  <main id="contenido" class="page-container not-found" tabindex="-1">
+    <a class="not-found-brand" href="/" aria-label={`${profile.brand}, inicio`}>
+      {profile.brand}
+      <span aria-hidden="true">_</span>
+    </a>
+    <p class="error-code" aria-hidden="true">
+      404
+    </p>
+    <h1>Esta página no existe.</h1>
+    <p>Puede que el enlace haya cambiado o que la dirección no sea correcta.</p>
+    <a class="action action--primary" href="/">
+      Volver al inicio
+    </a>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    justify-items: start;
+    align-content: center;
+    gap: var(--space-6);
+    min-block-size: 100svh;
+    padding-block: var(--space-12);
+  }
+  .not-found-brand {
+    color: var(--text-1);
+    font: 1.25rem/1 var(--font-heading);
+    text-decoration: none;
+  }
+  .not-found-brand span {
+    color: var(--signal);
+  }
+  .error-code {
+    color: var(--signal);
+    font: clamp(7rem, 22vw, 16rem)/0.8 var(--font-pixel);
+    margin-block-start: var(--space-8);
+  }
+  h1 {
+    font-size: var(--text-h2);
+  }
+  h1 + p {
+    color: var(--text-2);
+    max-inline-size: 48ch;
+  }
+</style>

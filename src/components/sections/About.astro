@@ -1,0 +1,86 @@
+---
+import { profile } from '../../data/profile.ts';
+import SectionHeading from '../ui/SectionHeading.astro';
+---
+
+<section id="sobre-mi" class="professional-section about" aria-labelledby="about-title">
+  <div class="page-container about-layout">
+    <div>
+      <SectionHeading id="about-title" index="04" firstLine="Sobre" secondLine="mí" />
+      <p class="about-name">{profile.name}</p>
+      <p class="about-role">{profile.role}</p>
+    </div>
+    <div class="about-copy">
+      <p class="about-lead">{profile.about}</p>
+      <p>{profile.collaboration}</p>
+      <dl class="about-details">
+        <div>
+          <dt>Áreas de trabajo</dt>
+          <dd>Arquitectura modular, integración de servicios y calidad del software.</dd>
+        </div>
+        {profile.languages.map((language) => (
+          <div>
+            <dt>{language.name}</dt>
+            <dd>
+              {language.level}
+              {language.context && ` · ${language.context}`}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--space-12);
+  }
+  .about-name {
+    margin-block-start: var(--space-6);
+    font-weight: 600;
+  }
+  .about-role {
+    margin-block-start: var(--space-2);
+    max-inline-size: 30ch;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  .about-copy > p + p {
+    margin-block-start: var(--space-6);
+  }
+  .about-lead {
+    font-size: var(--text-lg);
+    line-height: 1.65;
+  }
+  .about-copy > p:not(.about-lead) {
+    color: var(--text-2);
+  }
+  .about-details {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: var(--space-6);
+    margin: var(--space-8) 0 0;
+    padding-block-start: var(--space-6);
+    border-block-start: var(--border-width) solid var(--line-2);
+  }
+  dt {
+    color: var(--signal);
+    font-size: var(--text-sm);
+  }
+  dd {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-sm);
+  }
+  @media (max-width: 47.999rem) {
+    .about-layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+    .about-details {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

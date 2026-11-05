@@ -1,0 +1,90 @@
+---
+import { profile } from '../../data/profile.ts';
+import { siteIdentity } from '../../data/site.ts';
+import Icon from '../ui/Icon.astro';
+const year = new Date().getFullYear();
+const links = [
+  { label: 'Formación', href: '#formacion' },
+  { label: 'Certificaciones', href: '#certificaciones' },
+];
+---
+
+<footer class="site-footer">
+  <div class="page-container footer-inner">
+    <div class="footer-identity">
+      <a class="footer-brand" href="#inicio" aria-label={`${profile.brand}, volver al inicio`}>
+        {profile.brand}
+        <span aria-hidden="true">_</span>
+      </a>
+      <p>
+        © {year} · {profile.name}
+      </p>
+    </div>
+    <nav aria-label="Navegación del pie de página">
+      <ul>
+        {links.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+        <li>
+          <a href={siteIdentity.cv.path} download={siteIdentity.cv.filename} type="application/pdf">
+            {siteIdentity.cv.label}
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <a class="back-to-top" href="#inicio">
+      Volver al inicio <Icon name="arrow-up-right" size={18} />
+    </a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--bg-0);
+  }
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6) var(--space-8);
+    padding-block: var(--space-8);
+  }
+  .footer-brand {
+    color: var(--text-1);
+    font: 1.25rem/1 var(--font-heading);
+    text-decoration: none;
+  }
+  .footer-brand span {
+    color: var(--signal);
+  }
+  .footer-identity p {
+    margin-block-start: var(--space-3);
+    color: var(--text-2);
+    font-size: var(--text-sm);
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  nav a,
+  .back-to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: var(--target-size);
+    font-size: var(--text-sm);
+  }
+  nav a {
+    color: var(--text-2);
+  }
+  nav a:hover {
+    color: var(--signal);
+  }
+</style>
