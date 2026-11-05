@@ -29,6 +29,18 @@ function experienceHtml(entry: Experience) {
   </section>`;
 }
 
+/** Keep the approved CV-derived selection separate from later website-only declarations. */
+export function getPublicCvSkillGroups() {
+  return getSkillGroups()
+    .map((group) => ({
+      ...group,
+      entries: group.entries.filter(({ skill }) =>
+        skill.sources.some((source) => source.source === 'cv'),
+      ),
+    }))
+    .filter((group) => group.entries.length > 0);
+}
+
 /**
  * Positive allowlist from the reviewed professional model. Never opens, embeds,
  * redacts or copies the original PDF; administrative/source fields cannot leak in.
@@ -41,7 +53,7 @@ export function publicCvHtml(fontCss = '') {
     <ul>${entry.qualifications.map((q) => `<li>${escapeHtml(q.title)}</li>`).join('')}</ul></section>`,
     )
     .join('');
-  const groups = getSkillGroups()
+  const groups = getPublicCvSkillGroups()
     .map(
       (group) => `<p><strong>${escapeHtml(group.label)}:</strong>
     ${group.entries.map(({ skill }) => escapeHtml(skill.name)).join(' · ')}</p>`,

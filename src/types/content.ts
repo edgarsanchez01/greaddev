@@ -18,7 +18,8 @@ export interface Period {
 /** Editorial references contain no extracts, administrative fields or private values. */
 export type SourceReference =
   | { readonly source: 'cv'; readonly page: 1 | 2; readonly section: string }
-  | { readonly source: 'prd'; readonly section: string };
+  | { readonly source: 'prd'; readonly section: string }
+  | { readonly source: 'owner'; readonly section: string };
 
 export type ExperienceId = 'nfq-advisory' | 'sistemas-ec' | 'belomora' | 'carlos-vassan';
 export type ProjectId =

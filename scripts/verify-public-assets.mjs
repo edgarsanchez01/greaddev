@@ -8,7 +8,7 @@ import { format } from 'prettier';
 import { experiences } from '../src/data/experience.ts';
 import { education } from '../src/data/education.ts';
 import { certifications } from '../src/data/certifications.ts';
-import { skills } from '../src/data/skills.ts';
+import { getPublicCvSkillGroups } from '../src/lib/public-cv.ts';
 import { profile } from '../src/data/profile.ts';
 import { siteIdentity } from '../src/data/site.ts';
 import { formatPeriod } from '../src/lib/presentation.ts';
@@ -39,7 +39,7 @@ for (const entry of education)
   );
 required.push(
   ...certifications.map((c) => c.title),
-  ...Object.values(skills).map((skill) => skill.name),
+  ...getPublicCvSkillGroups().flatMap((group) => group.entries.map(({ skill }) => skill.name)),
 );
 for (const value of required)
   assert(text.includes(normalize(value)), `Missing professional text: ${value}`);

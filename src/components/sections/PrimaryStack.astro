@@ -1,7 +1,6 @@
 ---
 import { skills } from '../../data/skills.ts';
 import { primaryStackIds } from '../../lib/presentation.ts';
-import Icon from '../ui/Icon.astro';
 ---
 
 <section class="primary-stack" aria-labelledby="primary-stack-title">
@@ -10,8 +9,14 @@ import Icon from '../ui/Icon.astro';
     <ul>
       {primaryStackIds.map((id) => (
         <li>
-          <Icon name={id} size={27} />
-          <span>{skills[id].name}</span>
+          <img
+            src={`/icons/stack/${id}.png`}
+            alt={`Logotipo de ${skills[id].name}`}
+            width="27"
+            height="27"
+            decoding="async"
+          />
+          <span aria-hidden="true">{skills[id].name}</span>
         </li>
       ))}
     </ul>

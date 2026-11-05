@@ -5,6 +5,7 @@ import { experiences } from '../../src/data/experience.ts';
 import { profile } from '../../src/data/profile.ts';
 import { projects } from '../../src/data/projects.ts';
 import { skillCategories, skills } from '../../src/data/skills.ts';
+import { getSkillGroups } from '../../src/lib/professional.ts';
 import type {
   Certification,
   Experience,
@@ -19,6 +20,17 @@ const skillById: Readonly<Record<TechnologyId, Skill>> = skills;
 const projectList: readonly Project[] = Object.values(projects);
 
 describe('approved content relationships', () => {
+  it('adds owner-declared Linux beside Windows without attributing it to the CV or an employer', () => {
+    const environment = getSkillGroups().find((group) => group.id === 'environment');
+    expect(environment?.label).toBe('Entorno');
+    expect(environment?.entries.map(({ id }) => id)).toEqual(['windows', 'linux']);
+    expect(skills.linux.sources).toEqual([
+      { source: 'owner', section: 'BUILD — Ajustes finales del Stack / Entornos' },
+    ]);
+    for (const experience of Object.values(experiences)) {
+      expect(experience.technologies.map(({ id }) => id)).not.toContain('linux');
+    }
+  });
   it('preserves the four featured projects and their approved order', () => {
     expect(Object.keys(projects)).toEqual([
       'belomora-ecommerce',

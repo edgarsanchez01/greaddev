@@ -5,7 +5,7 @@ import { certifications } from '../../src/data/certifications.ts';
 import { education } from '../../src/data/education.ts';
 import { siteIdentity } from '../../src/data/site.ts';
 import { pageSeo, resolveSiteUrl, seoFiles } from '../../src/lib/seo.ts';
-import { escapeHtml, publicCvHtml } from '../../src/lib/public-cv.ts';
+import { escapeHtml, getPublicCvSkillGroups, publicCvHtml } from '../../src/lib/public-cv.ts';
 import { formatPeriod } from '../../src/lib/presentation.ts';
 
 describe('publication origin and metadata', () => {
@@ -53,6 +53,14 @@ describe('publication origin and metadata', () => {
 });
 
 describe('positive-allowlist public CV', () => {
+  it('keeps website-only owner declarations outside the unchanged approved CV selection', () => {
+    const names = getPublicCvSkillGroups().flatMap((group) =>
+      group.entries.map(({ skill }) => skill.name),
+    );
+    expect(names).toContain('Windows');
+    expect(names).not.toContain('Linux');
+    expect(publicCvHtml()).not.toContain('Linux');
+  });
   it('retains every reviewed contribution, period, qualification and certificate', () => {
     const html = publicCvHtml();
     for (const entry of Object.values(experiences)) {

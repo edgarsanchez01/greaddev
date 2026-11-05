@@ -81,6 +81,11 @@ export const skills = {
   scrum: { name: 'Scrum', category: 'practices', sources: [declared, nfq, sistemas, carlos] },
   'feature-flags': { name: 'Feature flags', category: 'practices', sources: [nfq] },
   windows: { name: 'Windows', category: 'environment', sources: [declared] },
+  linux: {
+    name: 'Linux',
+    category: 'environment',
+    sources: [{ source: 'owner', section: 'BUILD — Ajustes finales del Stack / Entornos' }],
+  },
   'mercado-pago': { name: 'Mercado Pago', category: 'integrations', sources: [belomora] },
   webhooks: { name: 'Webhooks', category: 'integrations', sources: [belomora] },
   murex: {
