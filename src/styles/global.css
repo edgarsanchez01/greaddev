@@ -197,9 +197,12 @@
     transition-delay: var(--reveal-delay, 0ms);
   }
 
-  html[data-motion='on'] [data-reveal-wipe] {
-    clip-path: inset(0 0 100% 0);
-    transition: clip-path var(--motion-reveal) var(--ease-standard);
+  /* The observed element must not be clipped: IntersectionObserver ignores fully clipped
+     geometry, so the wipe lives on `.wipe-line` children behind their own mask. */
+  html[data-motion='on'] [data-reveal-wipe] .wipe-line {
+    display: block;
+    transform: translate3d(0, 115%, 0);
+    transition: transform var(--motion-reveal) var(--ease-standard);
     transition-delay: var(--reveal-delay, 0ms);
   }
 
@@ -220,7 +223,10 @@
     transform: none;
   }
 
-  html[data-motion='on'] [data-reveal-wipe].is-revealed,
+  html[data-motion='on'] [data-reveal-wipe].is-revealed .wipe-line {
+    transform: none;
+  }
+
   html[data-motion='on'] [data-reveal-lines].is-revealed .line {
     clip-path: inset(0 0 0 0);
   }

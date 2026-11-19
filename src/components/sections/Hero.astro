@@ -7,22 +7,26 @@ const [role, focus] = profile.role.split(' / ');
 
 <section id="inicio" class="hero" aria-label="Presentación de Edgar Sánchez Flores">
   <div class="page-container hero-layout">
-    <div class="hero-copy">
-      <p class="hero-eyebrow text-signal">
+    <div class="hero-copy" data-reveal-group>
+      <p class="hero-eyebrow text-signal" data-reveal>
         <span class="pixel" aria-hidden="true"></span>PLAYER_01 / SOFTWARE_ENGINEER
         <span class="eyebrow-rule" aria-hidden="true"></span>
       </p>
-      <h1 class="hero-wordmark font-display" aria-label={profile.brand}>
-        {profile.brand.toUpperCase()}
-        <span aria-hidden="true">_</span>
+      <h1 class="hero-wordmark font-display" aria-label={profile.brand} data-reveal-wipe>
+        <span class="wordmark-mask">
+          <span class="wipe-line">
+            {profile.brand.toUpperCase()}
+            <span class="underscore" aria-hidden="true">_</span>
+          </span>
+        </span>
       </h1>
-      <p class="hero-name">{profile.name}</p>
-      <p class="hero-role">
+      <p class="hero-name" data-reveal>{profile.name}</p>
+      <p class="hero-role" data-reveal>
         <strong>{role}</strong>
         <span>({focus})</span>
       </p>
-      <p class="hero-summary">{profile.summary}</p>
-      <div class="hero-actions">
+      <p class="hero-summary" data-reveal>{profile.summary}</p>
+      <div class="hero-actions" data-reveal>
         <a class="action action--primary" href="#proyectos">
           <Icon name="code" size={22} />
           Ver proyectos
@@ -85,8 +89,17 @@ const [role, focus] = profile.role.split(' / ');
     letter-spacing: var(--tracking-display);
     white-space: nowrap;
   }
-  .hero-wordmark span {
+  .hero-wordmark .underscore {
     color: var(--signal);
+  }
+  .wordmark-mask,
+  .wipe-line {
+    display: block;
+  }
+  :global(html[data-motion='on']) .wordmark-mask {
+    overflow: hidden;
+    padding-block-end: 0.15em;
+    margin-block-end: -0.15em;
   }
   .hero-name {
     margin-block-start: var(--space-3);
