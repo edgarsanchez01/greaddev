@@ -11,7 +11,7 @@ const { id, index } = Astro.props;
 const { project, experience, contribution, icon } = getProjectPresentation(id);
 ---
 
-<article class="project-card" aria-labelledby={`title-${id}`} data-project={id}>
+<article class="project-card" aria-labelledby={`title-${id}`} data-project={id} data-reveal>
   <svg
     class="project-frame"
     viewBox="0 0 1000 500"
