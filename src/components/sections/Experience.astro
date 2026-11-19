@@ -28,10 +28,10 @@ const entries = getExperienceEntries().map((entry) => ({
         De APIs para dispositivos móviles a comercio electrónico y sistemas de riesgos financieros.
       </p>
     </div>
-    <ol class="experience-list" aria-label="Trayectoria profesional, de más reciente a más antigua">
+    <ol class="experience-list" data-reveal-group aria-label="Trayectoria profesional, de más reciente a más antigua">
       {entries.map(
         ({ id, experience, projectId, project, visibleContributions, extraContributions }) => (
-          <li class="experience-row" data-experience={id}>
+          <li class="experience-row" data-experience={id} data-reveal>
             <div class="experience-identity">
               <p class="experience-period">{formatPeriod(experience.period)}</p>
               <h3>{experience.organization}</h3>
