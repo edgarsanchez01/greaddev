@@ -85,9 +85,10 @@ test('Sombra retains its single canonical static fallback and reserved proportio
         .some((entry) => entry.name.endsWith('spritesheet-extended.png')),
     ),
   ).toBe(false);
-  await expect(page.locator('script[type="module"]')).toHaveCount(2);
+  await expect(page.locator('script[type="module"]')).toHaveCount(3);
   await expect(page.locator('script[src]:not([src^="/_astro/"])')).toHaveCount(0);
-  await expect(page.locator('script:not([type="module"])')).toHaveCount(0);
+  await expect(page.locator('script:not([type="module"])')).toHaveCount(1);
+  await expect(page.locator('script[data-motion-gate]')).toHaveCount(1);
   await context.close();
 });
 
@@ -98,6 +99,8 @@ for (const width of [
     page,
   }) => {
     await page.setViewportSize({ width, height: 900 });
+    // Transient reveal transforms shift geometry; static layout is asserted without motion.
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
     await page.evaluate(() => document.fonts.ready);
     const overflow = await page.evaluate(() => {
