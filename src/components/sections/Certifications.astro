@@ -22,9 +22,9 @@ const entries: readonly Certification[] = certifications;
       />
       <p>Formación complementaria en backend, desarrollo web y trabajo ágil.</p>
     </div>
-    <ol class="certification-list" aria-label="Cursos y certificados">
+    <ol class="certification-list" data-reveal-group aria-label="Cursos y certificados">
       {entries.map((entry, index) => (
-        <li data-certification={entry.id}>
+        <li data-certification={entry.id} data-reveal>
           <span class="certificate-index" aria-hidden="true">
             {String(index + 1).padStart(2, '0')}
           </span>

@@ -17,9 +17,10 @@ test('serves accessible static HTML without JavaScript', async ({ browser }) => 
     'href',
     'mailto:edgar.sanchez8999@gmail.com',
   );
-  await expect(page.locator('script[type="module"]')).toHaveCount(2);
+  await expect(page.locator('script[type="module"]')).toHaveCount(3);
   await expect(page.locator('script[src]:not([src^="/_astro/"])')).toHaveCount(0);
-  await expect(page.locator('script:not([type="module"])')).toHaveCount(0);
+  await expect(page.locator('script:not([type="module"])')).toHaveCount(1);
+  await expect(page.locator('script[data-motion-gate]')).toHaveCount(1);
   await context.close();
 });
 
@@ -83,6 +84,8 @@ test('honors reduced motion', async ({ page }) => {
 });
 
 test('has no automated accessibility violations on the implemented page', async ({ page }) => {
+  // Audit the resting design: mid-reveal opacity would be read as low contrast.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])

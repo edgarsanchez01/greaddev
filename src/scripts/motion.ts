@@ -8,10 +8,22 @@ export function revealDelay(index: number, staggerMs: number = REVEAL_STAGGER_MS
 
 const TARGETS = '[data-reveal], [data-reveal-wipe], [data-reveal-lines]';
 
+declare global {
+  interface Window {
+    __greadMotionFallback?: ReturnType<typeof setTimeout>;
+  }
+}
+
 export function initMotion(): void {
   const root = document.documentElement;
   // The head gate already decided. Bail out when motion is disallowed.
   if (!root.hasAttribute('data-motion')) return;
+
+  // The engine is running, so the head gate no longer needs its safety net.
+  if (window.__greadMotionFallback) {
+    clearTimeout(window.__greadMotionFallback);
+    delete window.__greadMotionFallback;
+  }
 
   for (const group of document.querySelectorAll<HTMLElement>('[data-reveal-group]')) {
     const stagger = Number(group.dataset['stagger']) || REVEAL_STAGGER_MS;

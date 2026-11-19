@@ -18,7 +18,7 @@ const entries: readonly Education[] = education;
       <p>Formación universitaria en desarrollo y gestión de software.</p>
     </div>
     {entries.map((entry) => (
-      <div class="education-entry">
+      <div class="education-entry" data-reveal>
         <div class="institution">
           <h3>{entry.institution}</h3>
           {entry.period && <p class="education-period">{formatPeriod(entry.period)}</p>}

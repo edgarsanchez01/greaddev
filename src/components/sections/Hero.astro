@@ -16,16 +16,22 @@ const [role, focus] = profile.role.split(' / ');
         <span class="wordmark-mask">
           <span class="wipe-line">
             {profile.brand.toUpperCase()}
-            <span class="underscore" aria-hidden="true">_</span>
+            <span class="underscore" aria-hidden="true">
+              _
+            </span>
           </span>
         </span>
       </h1>
-      <p class="hero-name" data-reveal>{profile.name}</p>
+      <p class="hero-name" data-reveal>
+        {profile.name}
+      </p>
       <p class="hero-role" data-reveal>
         <strong>{role}</strong>
         <span>({focus})</span>
       </p>
-      <p class="hero-summary" data-reveal>{profile.summary}</p>
+      <p class="hero-summary" data-reveal>
+        {profile.summary}
+      </p>
       <div class="hero-actions" data-reveal>
         <a class="action action--primary" href="#proyectos">
           <Icon name="code" size={22} />

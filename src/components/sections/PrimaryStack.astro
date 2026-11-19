@@ -6,9 +6,9 @@ import { primaryStackIds } from '../../lib/presentation.ts';
 <section class="primary-stack" aria-labelledby="primary-stack-title">
   <div class="page-container stack-inner">
     <h2 id="primary-stack-title">Stack principal</h2>
-    <ul>
+    <ul data-reveal-group data-stagger="40">
       {primaryStackIds.map((id) => (
-        <li>
+        <li data-reveal>
           <img
             src={`/icons/stack/${id}.png`}
             alt={`Logotipo de ${skills[id].name}`}

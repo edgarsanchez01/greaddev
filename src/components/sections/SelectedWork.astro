@@ -14,7 +14,9 @@ const featuredIds = (Object.keys(projects) as ProjectId[]).filter((id) => projec
         Trabajo real en comercio electrónico, sistemas empresariales, integración de servicios y
         desarrollo backend.
       </p>
-      <span class="work-count" data-reveal>{String(featuredIds.length).padStart(2, '0')} proyectos</span>
+      <span class="work-count" data-reveal>
+        {String(featuredIds.length).padStart(2, '0')} proyectos
+      </span>
     </div>
     <div class="project-grid" data-reveal-group>
       {featuredIds.map((id, index) => (
