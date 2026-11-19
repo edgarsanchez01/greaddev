@@ -141,3 +141,19 @@ como la "p" de "profesional".
 - Nombres finales de los helpers y estructura interna de `reveal.ts`.
 - Umbral exacto del observer (`rootMargin`), dentro del rango razonable para que el reveal
   ocurra cuando el bloque ya asoma.
+
+## Nota de implementación (2026-11-19)
+
+El titular del Hero usa wipe de bloque (`data-reveal-wipe`) en lugar de máscara por línea para no
+envolver el wordmark y no tocar el selector del guion bajo. Los titulares de sección sí usan wipe
+por línea (`data-reveal-lines`). Los reveals son de una sola pasada.
+
+Ajustes surgidos durante la implementación:
+
+- El wipe del Hero se aplica a `.wipe-line` dentro de `.wordmark-mask`: Chromium no considera
+  intersectado un elemento totalmente recortado por `clip-path`, así que el `h1` observado no puede
+  llevar el recorte.
+- El pie usa `data-reveal-fade` (solo opacidad). Un `translate` en el último bloque del documento
+  ampliaba el área desplazable en 1 rem y la encogía al revelarse.
+- Al recibir foco por teclado, el bloque se revela al instante (`transition: none`), incluso si el
+  observer ya había iniciado un fundido.
