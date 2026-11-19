@@ -6,7 +6,7 @@ export function revealDelay(index: number, staggerMs: number = REVEAL_STAGGER_MS
   return step * staggerMs;
 }
 
-const TARGETS = '[data-reveal], [data-reveal-wipe], [data-reveal-lines]';
+const TARGETS = '[data-reveal], [data-reveal-wipe], [data-reveal-lines], [data-reveal-fade]';
 
 declare global {
   interface Window {
@@ -37,6 +37,14 @@ export function initMotion(): void {
 
   const reveal = (element: Element) => element.classList.add('is-revealed');
 
+  // Keyboard focus is user-driven: reveal at once instead of waiting for the stagger.
+  // `transition: none` also cancels a fade that the observer may have just started.
+  const revealOnFocus = (element: HTMLElement) => {
+    element.style.transition = 'none';
+    element.style.setProperty('--reveal-delay', '0ms');
+    reveal(element);
+  };
+
   const observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
@@ -53,7 +61,7 @@ export function initMotion(): void {
   // Keyboard focus must never land on a still-hidden block.
   document.addEventListener('focusin', (event) => {
     const target = event.target instanceof Element ? event.target.closest(TARGETS) : null;
-    if (target) reveal(target);
+    if (target instanceof HTMLElement) revealOnFocus(target);
   });
 
   // If the user turns reduced motion on mid-session, everything becomes visible at once.

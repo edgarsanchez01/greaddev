@@ -197,6 +197,14 @@
     transition-delay: var(--reveal-delay, 0ms);
   }
 
+  /* Bottom-most blocks animate opacity only: a translate would grow the page's
+     scrollable area by the reveal distance and shrink it back on reveal. */
+  html[data-motion='on'] [data-reveal-fade] {
+    opacity: 0;
+    transition: opacity var(--motion-reveal) var(--ease-standard);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
   /* The observed element must not be clipped: IntersectionObserver ignores fully clipped
      geometry, so the wipe lives on `.wipe-line` children behind their own mask. */
   html[data-motion='on'] [data-reveal-wipe] .wipe-line {
@@ -218,6 +226,7 @@
   }
 
   html[data-motion='on'] [data-reveal].is-revealed,
+  html[data-motion='on'] [data-reveal-fade].is-revealed,
   html[data-motion='on'] [data-reveal-wipe].is-revealed {
     opacity: 1;
     transform: none;
