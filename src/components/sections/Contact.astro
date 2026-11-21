@@ -11,23 +11,25 @@ const links = [
 
 <section id="contacto" class="professional-section contact" aria-labelledby="contact-title">
   <div class="page-container contact-layout">
-    <div class="contact-copy">
+    <div class="contact-copy" data-reveal-group>
       <SectionHeading
         id="contact-title"
         index="07"
         firstLine="Hablemos"
         secondLine="de software."
       />
-      <p>¿Tienes un proyecto o una oportunidad profesional? Escríbeme para conversar.</p>
-      <a class="action action--primary" href={`mailto:${profile.email}`}>
+      <p data-reveal>
+        ¿Tienes un proyecto o una oportunidad profesional? Escríbeme para conversar.
+      </p>
+      <a class="action action--primary" href={`mailto:${profile.email}`} data-reveal>
         <Icon name="mail" size={22} />
         Escribir un correo
         <Icon name="arrow-up-right" size={19} />
       </a>
     </div>
-    <ul class="contact-links" aria-label="Contacto y perfiles públicos">
+    <ul class="contact-links" data-reveal-group aria-label="Contacto y perfiles públicos">
       {links.map((link) => (
-        <li>
+        <li data-reveal>
           <a href={link.href}>
             <Icon name={link.icon} size={22} />
             <span>{link.label}</span>

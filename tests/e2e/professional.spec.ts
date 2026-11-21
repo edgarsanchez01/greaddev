@@ -110,9 +110,10 @@ test('contact and footer expose the approved actions and public CV, without a ba
   await expect(page.getByRole('contentinfo')).toContainText(`© ${new Date().getFullYear()}`);
   await expect(page.locator('form')).toHaveCount(0);
   await expect(page.locator('footer a[download]')).toHaveCount(1);
-  await expect(page.locator('script[type="module"]')).toHaveCount(2);
+  await expect(page.locator('script[type="module"]')).toHaveCount(3);
   await expect(page.locator('script[src]:not([src^="/_astro/"])')).toHaveCount(0);
-  await expect(page.locator('script:not([type="module"])')).toHaveCount(0);
+  await expect(page.locator('script:not([type="module"])')).toHaveCount(1);
+  await expect(page.locator('script[data-motion-gate]')).toHaveCount(1);
   const html = await page.content();
   expect(html).not.toMatch(
     /professionalSource|pending-owner-confirmation|credentialId|maritalStatus|DentalClinic|(?:RFC|CURP|NSS)\s*:/,
@@ -160,9 +161,10 @@ for (const width of [320, 390, 1440]) {
       await expect(details).toHaveJSProperty('open', false);
       await expect(extra.first()).not.toBeVisible();
     }
-    await expect(page.locator('script[type="module"]')).toHaveCount(2);
+    await expect(page.locator('script[type="module"]')).toHaveCount(3);
     await expect(page.locator('script[src]:not([src^="/_astro/"])')).toHaveCount(0);
-    await expect(page.locator('script:not([type="module"])')).toHaveCount(0);
+    await expect(page.locator('script:not([type="module"])')).toHaveCount(1);
+    await expect(page.locator('script[data-motion-gate]')).toHaveCount(1);
     await context.close();
   });
 

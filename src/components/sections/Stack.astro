@@ -10,11 +10,12 @@ const groups = getSkillGroups();
     <div class="section-intro">
       <SectionHeading id="stack-title" index="03" firstLine="Stack" secondLine="tecnológico" />
     </div>
-    <div class="stack-categories">
+    <div class="stack-categories" data-reveal-group>
       {groups.map((group) => (
         <section
           id={`stack-${group.id}`}
           class="stack-category"
+          data-reveal
           aria-labelledby={`category-${group.id}`}
         >
           <h3 id={`category-${group.id}`}>{group.label}</h3>

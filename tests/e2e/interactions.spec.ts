@@ -104,6 +104,8 @@ test('the native mobile menu remains usable without JavaScript and exposes no du
 
 test('opened menu is accessible and resets on the desktop breakpoint', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
+  // Audit the resting design: mid-reveal opacity would be read as low contrast.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   const menu = page.locator('[data-mobile-navigation]');
   await menu.locator('summary').click();

@@ -186,6 +186,59 @@
   .skip-link:focus {
     transform: translateY(0);
   }
+
+  /* Motion states exist only when the head gate allowed motion (no JS => no hidden content). */
+  html[data-motion='on'] [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, var(--motion-reveal-distance), 0);
+    transition:
+      opacity var(--motion-reveal) var(--ease-standard),
+      transform var(--motion-reveal) var(--ease-standard);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* Bottom-most blocks animate opacity only: a translate would grow the page's
+     scrollable area by the reveal distance and shrink it back on reveal. */
+  html[data-motion='on'] [data-reveal-fade] {
+    opacity: 0;
+    transition: opacity var(--motion-reveal) var(--ease-standard);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* The observed element must not be clipped: IntersectionObserver ignores fully clipped
+     geometry, so the wipe lives on `.wipe-line` children behind their own mask. */
+  html[data-motion='on'] [data-reveal-wipe] .wipe-line {
+    display: block;
+    transform: translate3d(0, 115%, 0);
+    transition: transform var(--motion-reveal) var(--ease-standard);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  html[data-motion='on'] [data-reveal-lines] .line {
+    display: block;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path var(--motion-reveal) var(--ease-standard);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  html[data-motion='on'] [data-reveal-lines] .line:nth-child(2) {
+    transition-delay: calc(var(--reveal-delay, 0ms) + 80ms);
+  }
+
+  html[data-motion='on'] [data-reveal].is-revealed,
+  html[data-motion='on'] [data-reveal-fade].is-revealed,
+  html[data-motion='on'] [data-reveal-wipe].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+
+  html[data-motion='on'] [data-reveal-wipe].is-revealed .wipe-line {
+    transform: none;
+  }
+
+  html[data-motion='on'] [data-reveal-lines].is-revealed .line {
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

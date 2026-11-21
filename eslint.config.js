@@ -12,6 +12,7 @@ export default [
       'coverage/**',
       'playwright-report/**',
       'test-results/**',
+      '.superpowers/**',
     ],
   },
   js.configs.recommended,
